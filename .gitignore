@@ -1,0 +1,13 @@
+configurations/git/config.local
+configurations/git/credentials
+configurations/nvim/plugged
+configurations/sway/outputs
+configurations/sway/workspaces
+configurations/vim/.netrwhist
+configurations/vim/autoload/plug.vim
+configurations/vim/files/
+configurations/vim/plugged/
+configurations/vim/spell
+configurations/vim/viminfo
+configurations/zsh/.zcomp*
+configurations/zsh/plugins

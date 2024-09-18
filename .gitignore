@@ -1,0 +1,5 @@
+configurations/git/config.local
+configurations/git/credentials
+configurations/zsh/plugins
+configurations/vim/plugged
+

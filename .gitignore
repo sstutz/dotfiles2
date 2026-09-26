@@ -11,3 +11,4 @@ configurations/vim/spell
 configurations/vim/viminfo
 configurations/zsh/.zcomp*
 configurations/zsh/plugins
+configurations/zsh/.zshrc.local

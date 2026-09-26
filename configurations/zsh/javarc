@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# see `archlinux-java status` for current default
+# or `sudo archlinux-java set java-XX-openjdk` to set a new default.
+if [[ -f "/usr/bin/javac" ]]; then
+    export JAVA_HOME="/usr/lib/jvm/default"
+fi

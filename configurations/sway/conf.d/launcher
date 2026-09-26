@@ -1,0 +1,23 @@
+#
+# Rofi Application launcher
+#
+# set $menu ~/.local/bin/start-rofi.sh
+
+exec uwsm-app -- elephant
+exec uwsm-app -- walker --gapplication-service
+set $menu walker
+for_window [app_id="dev.benz.walker"] border none, floating enable
+
+#
+# Walker Application launcher
+
+#
+# Ulauncher Application launcher
+#
+# exec gapplication launch io.ulauncher.Ulauncher > $XDG_STATE_HOME/ulauncher.log 2>&1
+# set $menu ulauncher-toggle
+# for_window [app_id="^ulauncher$"] floating enable, border none
+
+# Start your launcher
+bindsym $mod+d exec $menu
+

@@ -1,0 +1,86 @@
+#!/usr/bin/env zsh
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+
+# enable coloured output by default
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+
+# convenience shorthands
+alias ll='ls -Alrh'
+alias rs='sudo -sE'
+alias o=xdg-open
+alias open=xdg-open
+
+#suffix aliases
+alias -s md='glow'
+
+# global aliases
+alias -g NE='2>/dev/null'
+alias -g DN='> /dev/null'
+alias -g NUL='>/dev/null 2>&1'
+alias -g C='| wl-copy'
+
+
+[[ -x /usr/bin/bat ]] && alias cat="bat"
+
+# copy pastebinit links to clipboard rather than stdout
+alias pastebincp="pastebinit | xsel -ib"
+
+# reloading the configuration
+alias reload="source \"$ZDOTDIR/.zshrc\" && echo 'ZSH config reloaded from \"$ZDOTDIR/.zshrc\"'"
+
+# using rsync to cp files for proper output
+if which rsync >/dev/null; then
+    alias cp="rsync --progress -avzh"
+fi
+
+# verbose output for cp and rm
+for c in mv cp rm rmdir; do
+    alias $c="$c -v"
+done
+
+# mask built-ins with better defaults
+alias mkdir='mkdir -p'
+alias ping='ping -c 5'
+alias type='type -a'
+
+# force git ssh to use IPv4
+alias git='GIT_SSH_COMMAND="ssh -4" git'
+
+# date/time
+alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
+alias datestamp="date '+%Y-%m-%d'"
+
+# force xterm for ssh
+alias ssh="TERM=xterm-256color ssh"
+
+# disk usage
+alias biggest='du -s ./* | sort -nr | awk '\''{print $2}'\'' | xargs du -sh'
+
+alias cd=",zd"
+,zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+
+[[ -x /usr/bin/plocate ]] && alias locate=plocate
+
+[[ -x /usr/bin/neomutt ]] && alias mutt=neomutt
+
+# force npm to use ipv4 dns resolution
+# for some reason ipv6 freezes npm
+[[ -x /usr/bin/npm ]] && alias npm='node --dns-result-order=ipv4first /usr/bin/npm'
+
+# Include custom aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local

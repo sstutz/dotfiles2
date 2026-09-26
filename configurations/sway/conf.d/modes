@@ -1,0 +1,70 @@
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 50px
+    bindsym $down resize grow height 50px
+    bindsym $up resize shrink height 50px
+    bindsym $right resize grow width 50px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# screenshoting
+# inspiration: https://www.reddit.com/r/swaywm/comments/ghnlea/comment/fqnzxkx/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+#
+set $screenshotMode 'Screenshot (r:region, f:full, w:window)'
+mode $screenshotMode {
+    set $satty satty -f - \
+        --initial-tool=arrow \
+        --copy-command=wl-copy \
+        --actions-on-escape="save-to-clipboard,exit" \
+        --brush-smooth-history-size=5 \
+        --disable-notifications
+
+    bindsym r exec swaymsg 'mode "default"' && grim -t ppm -g "$(slurp -d)" - | $satty
+    bindsym f exec swaymsg 'mode "default"' && grim -t ppm - | $satty
+    bindsym w exec swaymsg 'mode "default"' && swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -t ppm -g - - | $satty
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+p mode $screenshotMode
+bindsym Print mode $screenshotMode
+
+# Screen recording
+#
+set $screenRecording 'Screen Recording ($mod+shift+v:video, $mod+shift+s:video and audio, $mod+shift+q:End recording)'
+mode $screenRecording {
+    set $recordingName "Screen Recording $(date +%Y-%m-%d) at $(date +%H.%M.%S).mp4"
+    set $videoRecorder wf-recorder \
+        --geometry "$(slurp)" \
+        --file ~/Videos/$recordingName
+
+    # set $setInactiveRecording echo "" > /tmp/screen-recording-state && pkill -SIGUSR2 waybar
+# set $setActiveRecording echo "On" > /tmp/screen-recording-state && pkill -SIGUSR2 waybar
+
+    set $videoAudioRecorder wf-recorder \
+        --geometry "$(slurp)" \
+        --audio \
+        --file ~/Videos/$recordingName
+
+    bindsym $mod+shift+v exec pkill wf-recorder || $videoRecorder
+    bindsym $mod+shift+s exec pkill wf-recorder || $videoAudioRecorder
+    bindsym $mod+shift+q exec pkill wf-recorder && notify-send "Video captured in ~/Videos/$recordingName"; mode "default"
+}
+bindsym $mod+shift+s mode $screenRecording
+

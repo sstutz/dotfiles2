@@ -1,0 +1,35 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+scan_timeout = 50
+
+[character]
+success_symbol = "[λ](gray)"
+error_symbol = "[λ](bold red)"
+vicmd_symbol = "[N](bold green)"
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+style = "yellow bold"
+format = " [in $path]($style)[$read_only]($read_only_style) "
+
+[gcloud]
+disabled = true
+
+[git_branch]
+style = "red bold"
+
+[git_status]
+disabled = true
+
+[username]
+show_always = true
+style_root = "red bold"
+style_user = "green bold"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = true
+style = "green bold"
+format = "[@$hostname]($style)"
+

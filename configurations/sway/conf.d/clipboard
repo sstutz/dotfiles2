@@ -1,0 +1,10 @@
+#
+# Clipboard management
+#
+exec clipse -listen
+
+# style window to look nice
+# to resize ..., move position center, resize set 50ppt 60ppt
+for_window [app_id="clipse"] floating enable, move position center
+
+bindsym $mod+Shift+v exec $term --class clipse -e clipse

@@ -1,0 +1,44 @@
+#
+# Status Bar:
+#
+bar {
+    position top
+    swaybar_command waybar
+}
+
+exec uwsm-app -- /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+
+# exec fcitx5
+
+#
+# Lockscreen
+#
+#exec swayidle \
+#   timeout 900 'swaylock -f -c 000000' \
+#   timeout 1800 'swaymsg "output * dpms off"' \
+#      resume 'swaymsg "output * dpms on"' \
+#   before-sleep 'swaylock -f -c 000000'
+
+#
+# required to use wallpapers defined in swaySettings
+#
+exec uwsm-app -- sway-wallpaper
+
+#
+# Notification daemon
+#
+exec uwsm-app -- swaync
+bindsym $mod+Shift+n exec uwsm-app -- swaync-client -t -sw
+
+
+#
+# Enable autotiling
+#
+exec uwsm-app -- autotiling-rs
+
+
+#
+#  OSD server
+#
+exec uwsm-app -- swayosd-server
+

@@ -1,0 +1,3 @@
+for_window [class="Gpauth"] floating enable, move position center
+for_window [app_id="com.gabm.satty"] floating enable, move position center
+for_window [app_id="org.erikreider.swaysettings"] floating enable, move position center

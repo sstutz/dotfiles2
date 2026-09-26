@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+if ! command -v rustup &> /dev/null; then
+    return;
+fi
+
+# enable shell completion
+# source <(rustup completions zsh);
+rustup completions zsh > "$HOME/.local/share/zsh/site-functions/_rustup"
+rustup completions zsh cargo > "$HOME/.local/share/zsh/site-functions/_cargo"
+
+# update rust toolchain
+# rustup update

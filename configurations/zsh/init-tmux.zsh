@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+,create-user-tmux-session() {
+    local session=${1-work}
+    tmux new-session -s "$session" -n irc -d
+    tmux send-keys -t "$session" 'weechat' C-m
+    tmux new-window -t "$session" -n console
+}
+
+if [[ "$TERM" != "tmux-255color" ]]; then
+    tmux has-session -t "$USER" 2>/dev/null  || ,create-user-tmux-session "$USER"
+fi
+

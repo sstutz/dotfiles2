@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+if [[ -d "$HOME/go" ]]; then
+    path+="$HOME/go"
+    path+="$GOPATH/bin"
+fi
+
+if [[ -d "/opt/google-appengine-go" ]]; then
+    path+="/opt/google-appengine-go"
+fi
+
+# Enable 1.5 experimental vendoring
+export GO15VENDOREXPERIMENT=1
+
+# make sure godoc is always running
+if command -v godoc &> /dev/null; then
+    lsof -i:6060 &>/dev/null || (godoc -http=:6060 2>/dev/null &)
+fi

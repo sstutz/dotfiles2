@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# to use vial, you'll have to clone the repo and build the
+# binary for your keyboard.
+#
+# git clone https://github.com/vial-kb/vial-qmk.git
+# qmk compile -kb gmmk/pro/rev1/ansi -km vial
+#
+usage() {
+    echo "SYNOPSIS:"
+    echo "    gmk-flash <QMK Firmware.bin Path>"
+    echo
+    echo "You need to put your keyboard into bootloader mode."
+    echo "To do so on default GMMK Pro firmware, you have to unplug your keyboard,"
+    echo "then hold the Spacebar and B keys while plugging in the USB cable into the keyboard."
+}
+
+if (( $# == 0 )); then
+    usage;
+    exit 1;
+fi
+
+firmware_bin_path="${1}"
+dfu-util --list
+printf "Enter DFU Device ID from Listing Above or 'a' for abort (e.g. DEAD:BEEF): ";
+read -r dfu
+
+if [[ "$dfu" = "a" ]]; then
+    exit 1;
+fi
+
+# Example DFU => 04AA:df22
+dfu-util \
+    --alt 0 \
+    --device "$dfu" \
+    --dfuse-address 0x08000000:leave \
+    --download "$firmware_bin_path"

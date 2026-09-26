@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+git-update-ctags() {
+    ctagHook=$(git root)/.git/hooks/ctags
+    if [[ ! -x "$ctagHook" ]]; then
+        echo "ctags hook missing.";
+
+        return;
+    fi
+
+    source "$ctagHook";
+}
+
+git-update-ctags;

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+clipboard-format-json() {
+    local formatted="$(wl-paste | jq '.')"
+    if jq -e . >/dev/null 2>&1 <<<"$formatted"; then
+        wl-copy $formatted
+    fi
+}
+
+clipboard-format-json "$1"

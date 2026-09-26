@@ -1,0 +1,162 @@
+{
+    "spacing": 0,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad",
+        "sway/window"
+    ],
+
+    "modules-center": [
+        "clock",
+        "custom/recording"
+    ],
+
+    "modules-right": [
+        "tray",
+        "pulseaudio#output",
+        "pulseaudio#input",
+        "battery",
+        "network",
+        "cpu",
+        "custom/power",
+        "sway/language",
+        "custom/notification"
+        // "group/tray-expander"
+    ],
+    "sway/language": {
+        "format": "{flag}  ",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "spacing": 10,
+        "tooltip-format":"{long}",
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": " {icon} ",
+        "format-icons": {
+            "notification": "<span foreground=''><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "custom/power": {
+        "format": "stutz",
+        "tooltip-format": "power manager",
+        "on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Shutdown' 'shutdown -h now' -b 'Restart' 'shutdown -r now' -b 'Logout' 'swaymsg exit' -b 'Hibernate' 'systemctl hibernate'"
+        // "on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Shutdown' 'shutdown -h now' -b 'Restart' 'shutdown -r now' -b 'Logout' 'swaymsg exit' -b 'Hibernate' 'systemctl hibernate' --background=#005566 --button-background=#009999 --button-border=#002b33 --border-bottom=#002b33"
+    },
+    "custom/recording": {
+        "exec": "cat /tmp/screen-recording-state",
+        "signal": 2,
+        "hide-empty-text": true,
+        "format": "🔥"
+    },
+    "clock": {
+        "interval": 30,
+        "format": "{:%H:%M}",
+        "format-alt": "{:L%d %B W%V %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "󰍛",
+        "on-click": "$TERMINAL -e btop"
+    },
+
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-discharging": "{icon}",
+        "format-charging": "{icon}",
+        "format-plugged": "",
+        "format-icons": {
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        },
+        "format-full": "󰂅",
+        "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+        "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+        "interval": 5,
+        // "on-click": "omarchy-menu power",
+        "states": {
+            "warning": 20,
+            "critical": 10
+        }
+    },
+
+    "network": {
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "format": "{icon}",
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰀂",
+        "format-disconnected": "󰤮",
+        "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-disconnected": "Disconnected",
+        "interval": 3,
+        "on-click": "$TERMINAL --class=Impala -e impala",
+        "spacing": 1
+    },
+
+      "pulseaudio#input": {
+        "format-source": " {volume}%",
+        "format-source-muted": " off",
+        "format": "{format_source}",
+        "scroll-step": 1,
+        "smooth-scrolling-threshold": 1,
+        "on-click": "amixer sset 'Capture' toggle",
+        "on-click-middle": "pavucontrol",
+        "on-scroll-up": "amixer sset 'Capture' 2%+",
+        "on-scroll-down": "amixer sset 'Capture' 2%-",
+      },
+    "pulseaudio#output": {
+        "format": "{icon}",
+        "on-click": "$TERMINAL --class=Wiremix -e wiremix",
+        // "on-click": "pwvucontrol"
+        // "on-click-right": "pamixer -t",
+        "tooltip-format": "Playing at {volume}%",
+        "scroll-step": 5,
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        //         "format": "{volume}% {icon}",
+        //         "format-bluetooth": "{icon} {volume}%",
+        //         "format-muted":" MUTE {format_source}",
+        //         "format-source": " {volume}%",
+        //         "format-source-muted": "",
+        //         "format-icons": {
+        //             "headphone": "",
+        //             "hands-free": "",
+        //             "default": ["", "", ""]
+        //         },
+    },
+    // "group/tray-expander": {
+    //     "orientation": "inherit",
+    //     "drawer": {
+    //         "transition-duration": 600,
+    //         "children-class": "tray-group-item"
+    //     },
+    //     "modules": ["custom/expand-icon", "tray"]
+    // },
+
+    // "custom/expand-icon": {
+    //     "format": " ",
+    //     "tooltip": false
+    // },
+
+    "tray": {
+        "spacing": 14
+    }
+}
